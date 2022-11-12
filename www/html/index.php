@@ -6,14 +6,14 @@
     
 // exit();
 
-    $host = getenv('IP_HOST');
+    $host = getenv('MARIADB_HOST');
+    $port = getenv('MARIADB_PORT');
     $dbname = getenv('MARIADB_DATABASE');
-    $user = 'root'/*getenv('MARIADB_USER')*/;
-    $password = getenv('MARIADB_ROOT_PASSWORD')/*getenv('MARIADB_PASSWORD')*/;
-    $port = getenv('PORT_MARIADB');
+    $user = getenv('MARIADB_USER');
+    $password = getenv('MARIADB_PASSWORD');
 
     try {
-        $dbh = new PDO('mysql:host=' . $host . ';', $user, $password);
+        $dbh = new PDO('mysql:host=' . $host . ';port=' . $port . ';', $user, $password);
         foreach($dbh->query('SHOW DATABASES;') as $row) {
             print_r($row);
         }

@@ -1,22 +1,5 @@
-version: '3.1'
+version: '3.3'
 services:
-    mariadb:
-        container_name: mariadb
-        image: mariadb:latest
-        ports:
-            - ${PORT_MARIADB}:3306
-        environment:
-            MARIADB_USER: ${MARIADB_USER}
-            MARIADB_PASSWORD: ${MARIADB_PASSWORD}
-            MARIADB_DATABASE: ${MARIADB_DATABASE}
-            MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
-        volumes:
-            - ./mariadb/data:/var/lib/mysql
-        #networks:
-            #customnetwork:
-                #ipv4_address: 127.0.0.0
-        #command: "mysqld --init-file /data/application/init.sql"
-
     nginx:
         working_dir: /var/www/html
         build:
@@ -25,18 +8,15 @@ services:
         image: nginx:latest
         container_name: nginx
         ports:
-            - ${PORT_NGINX_HTTP}:80
+            - ${NGINX_PORT_HTTP}:80
         links:
-            - php-fpm
+            - php
         volumes:
-            - ${PATH_APPLICATION_ROOT}:/var/www/html
+            - ${APPLICATION_PATH}:/var/www/html
         depends_on:
-            - mariadb
-        #networks:
-            #customnetwork:
-                #ipv4_address: 127.0.0.0
+            - php
 
-    php-fpm:
+    php:
         working_dir: /var/www/html
         build:
             context: ./php
@@ -44,21 +24,36 @@ services:
         image: php:8.1-fpm
         container_name: php
         ports:
-            - ${PORT_PHP_FPM}:9000
+            - ${PHP_PORT}:9000
         environment:
-            IP_HOST: ${IP_HOST}
+            MARIADB_HOST: ${MARIADB_HOST}
+            MARIADB_PORT: ${MARIADB_PORT}
+            MARIADB_USER: ${MARIADB_USER}
+            MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+            MARIADB_DATABASE: ${MARIADB_DATABASE}
+            MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+        links:
+            - mariadb
+        volumes:
+            - ${APPLICATION_PATH}:/var/www/html
+        depends_on:
+            - mariadb
+
+    mariadb:
+        container_name: mariadb
+        build:
+            context: ./mariadb
+            dockerfile: Dockerfile
+        image: mariadb:latest
+        ports:
+            - ${MARIADB_PORT}:3306
+        environment:
+            MARIADB_HOST: ${MARIADB_HOST}
+            MARIADB_PORT: ${MARIADB_PORT}
             MARIADB_USER: ${MARIADB_USER}
             MARIADB_PASSWORD: ${MARIADB_PASSWORD}
             MARIADB_DATABASE: ${MARIADB_DATABASE}
             MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
         volumes:
-            - ${PATH_APPLICATION_ROOT}:/var/www/html
-        #networks:
-            #customnetwork:
-                #ipv4_address: 127.0.0.0
-
-#networks:
-  #customnetwork:
-    #ipam:
-      #config:
-        #- subnet: 127.0.0.0/16
+            - ./mariadb/data:/var/lib/mysql
+        #command: "mysqld --init-file /var/lib/mysql/init.sql"
