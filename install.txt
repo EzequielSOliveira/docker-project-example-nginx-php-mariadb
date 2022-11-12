@@ -2,6 +2,11 @@
 # 1. Copy .env-example to .env and change properties;
 # 2. Edit ./mariadb/sql/init.sql and set password like .env file.
 
-# BEFORE BUILD
-# MariaDB Secure Installation (execute in container bash)
+# 3. Build
+cocker-compose build
+
+# 4. Up containers
+docker-compose up -d
+
+# 5. MariaDB Secure Installation (execute in container bash)
 /usr/bin/mysql_secure_installation
