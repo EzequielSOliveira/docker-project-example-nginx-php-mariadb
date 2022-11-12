@@ -9,6 +9,7 @@ services:
         container_name: nginx
         ports:
             - ${NGINX_PORT_HTTP}:80
+            #- ${NGINX_PORT_HTTPS}:443
         links:
             - php
         volumes:
@@ -23,8 +24,8 @@ services:
             dockerfile: Dockerfile
         image: php:8.1-fpm
         container_name: php
-        ports:
-            - ${PHP_PORT}:9000
+        expose:
+            - ${PHP_PORT}
         environment:
             MARIADB_HOST: ${MARIADB_HOST}
             MARIADB_PORT: ${MARIADB_PORT}
@@ -45,8 +46,8 @@ services:
             context: ./mariadb
             dockerfile: Dockerfile
         image: mariadb:latest
-        ports:
-            - ${MARIADB_PORT}:3306
+        expose:
+            - ${MARIADB_PORT}
         environment:
             MARIADB_HOST: ${MARIADB_HOST}
             MARIADB_PORT: ${MARIADB_PORT}
