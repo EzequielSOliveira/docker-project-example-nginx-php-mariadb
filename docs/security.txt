@@ -1,0 +1,5 @@
+# SECURITY
+
+# Mariadb Secure Installation
+
+/usr/bin/mysql_secure_installation

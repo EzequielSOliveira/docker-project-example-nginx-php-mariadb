@@ -1,14 +1,13 @@
 # PRODUCTION INSTALL
 
-# FIRST STEPS PRODUCTION
-# 1. Copy .env-example to .env and change properties;
-# 2. Edit ./mariadb/sql/init.sql and set password like .env file.
+cp .env-example .env
 
-# 3. Build
+cp mariadb/sql/init.sql-example mariadb/sql/init.sql
+
+cp mariadb/sql/database.sql-example mariadb/sql/database.sql
+
+cp mariadb/sql/secure.sql-example mariadb/sql/secure.sql
+
 cocker-compose build
 
-# 4. Up containers
 docker-compose up -d
-
-# 5. MariaDB Secure Installation (execute in container bash)
-/usr/bin/mysql_secure_installation
