@@ -1,7 +1,3 @@
-CREATE USER 'default'@'localhost' IDENTIFIED BY 'awd2@12317263nh1s2';
-GRANT ALL PRIVILEGES ON *.* TO 'default'@'localhost' IDENTIFIED BY 'awd2@12317263nh1s2';
-FLUSH PRIVILEGES;
-
 DROP DATABASE IF EXISTS `database`;
 
 CREATE DATABASE IF NOT EXISTS `database` CHARACTER SET `utf8mb4` COLLATE `utf8mb4_unicode_ci`;

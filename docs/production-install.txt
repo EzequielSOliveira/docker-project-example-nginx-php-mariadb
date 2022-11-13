@@ -1,4 +1,6 @@
-# FIRST STEPS
+# PRODUCTION INSTALL
+
+# FIRST STEPS PRODUCTION
 # 1. Copy .env-example to .env and change properties;
 # 2. Edit ./mariadb/sql/init.sql and set password like .env file.
 
