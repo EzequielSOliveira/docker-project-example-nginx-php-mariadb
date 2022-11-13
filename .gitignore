@@ -1,5 +1,8 @@
 .env
-mariadb/sql/database.sql
 mariadb/sql/init.sql
+mariadb/sql/database.sql
+mariadb/sql/secure.sql
 mariadb/data/*
 !mariadb/data/.gitkeep
+mariadb/log/*
+!mariadb/log/.gitkeep
