@@ -3,16 +3,18 @@ services:
     nginx:
         working_dir: /var/www/html
         build:
-            context: ./nginx
-            dockerfile: Dockerfile
+           context: ./nginx
+           dockerfile: Dockerfile
         image: nginx:latest
         container_name: nginx
         ports:
             - ${NGINX_PORT_HTTP}:80
-            #- ${NGINX_PORT_HTTPS}:443
+            - ${NGINX_PORT_HTTPS}:443
         links:
             - php
         volumes:
+            - ${NGINX_CONF_DIR}:/etc/nginx/conf.d
+            - ${NGINX_LOG_DIR}:/var/log/nginx
             - ${APPLICATION_PATH}:/var/www/html
         depends_on:
             - php
@@ -57,4 +59,3 @@ services:
             MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
         volumes:
             - ./mariadb/data:/var/lib/mysql
-        #command: "mysqld --init-file /var/lib/mysql/init.sql"
