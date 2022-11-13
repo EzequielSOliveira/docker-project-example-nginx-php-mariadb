@@ -3,7 +3,7 @@
 # IMPORTANT: modify each copied files:
 # 1. `.env`: change MariaDB data;
 # 2. `mariadb/sql/init.sql`: change user name and password to same of `.env` file;
-# 3. `mariadb/sql/database.sql`: change database sql script.
+# 3. `mariadb/sql/database.sql`: change database sql script, and set database name like in `.env` file.
 
 cp .env-example .env
 
@@ -13,6 +13,6 @@ cp mariadb/sql/database.sql-example mariadb/sql/database.sql
 
 cp mariadb/sql/secure.sql-example mariadb/sql/secure.sql
 
-cocker-compose build
+docker-compose build
 
 docker-compose up -d
