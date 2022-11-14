@@ -13,6 +13,6 @@ cp mariadb/sql/database.sql-example mariadb/sql/database.sql
 
 cp mariadb/sql/secure.sql-example mariadb/sql/secure.sql
 
-docker-compose build
+docker compose build
 
-docker-compose up -d
+docker compose up -d
